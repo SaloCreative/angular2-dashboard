@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
     selector: 'app',
     template: `
     <h1>{{title}}</h1>
-    <client-list></client-list>
+    <a routerLink="/dashboard">Dashboard</a>
+    <a routerLink="/clients">Clients</a>
+    <router-outlet></router-outlet>
   `
 })
 export class AppComponent {

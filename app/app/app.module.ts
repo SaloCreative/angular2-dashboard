@@ -1,22 +1,27 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { BrowserModule }    from '@angular/platform-browser';
+import { FormsModule }  from '@angular/forms';
 
-import { AppComponent }  from './app.component';
+import { AppComponent } from './app.component';
+import { routing }  from './app.routing';
 
-import { ClientListComponent }  from '../client/client-list.component';
-
-import { ClientDetailComponent } from '../client/client-detail.component';
+import { ClientListComponent }  from '../clients/client-list.component';
+import { ClientDetailComponent }    from '../clients/client-detail.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import {NotFoundComponent} from "../error/404.component";
 
 @NgModule({
   imports:      [
       BrowserModule,
-      FormsModule
+      FormsModule,
+      routing
   ],
   declarations: [
       AppComponent,
       ClientListComponent,
-      ClientDetailComponent
+      ClientDetailComponent,
+      DashboardComponent,
+      NotFoundComponent
   ],
   bootstrap:    [ AppComponent ]
 })
