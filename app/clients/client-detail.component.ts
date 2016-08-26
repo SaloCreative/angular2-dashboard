@@ -1,19 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router'
 import { Client } from './client';
+import { ClientService } from './client.service';
 
 @Component({
     selector: 'client-detail',
-    template: `
-      <div *ngIf="client">
-        <h2>{{client.name}} details!</h2>
-        <div><label>id: </label>{{client.id}}</div>
-        <div>
-          <label>name: </label>
-          <input [(ngModel)]="client.name" placeholder="name"/>
-        </div>
-      </div>`
+    templateUrl: 'partials/clients/client-detail.component.html',
+    providers: [ClientService]
 })
-export class ClientDetailComponent {
-    @Input()
+export class ClientDetailComponent implements OnInit {
     client: Client;
+
+    constructor(
+        private clientService: ClientService,
+        private route: ActivatedRoute) {
+    }
+
+    ngOnInit(): void {
+        this.route.params.forEach((params: Params) => {
+            let id = +params['id'];
+            this.clientService.getClient(id)
+                .then(client => this.client = client);
+        });
+    }
+    goBack(): void {
+        window.history.back();
+    }
 }

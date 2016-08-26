@@ -1,7 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Client } from '../clients/client';
+import { ClientService } from '../clients/client.service';
 
 @Component({
     selector: 'dashboard',
-    template: '<h3>My Dashboard</h3>'
+    templateUrl: 'partials/dashboard/dashboard.component.html',
+    providers: [ClientService]
 })
-export class DashboardComponent { }
+export class DashboardComponent implements OnInit {
+
+    clients: Client[] = [];
+
+    constructor(
+        private router: Router,
+        private clientService: ClientService
+    ) { }
+
+    ngOnInit(): void {
+        this.clientService.getClients()
+            .then(clients => this.clients = clients.slice(1, 5));
+    }
+
+    gotoDetail(client: Client): void {
+        let link = ['/client', client.id];
+        this.router.navigate(link);
+    }
+}

@@ -1,0 +1,8 @@
+<h3>Top Clients</h3>
+<div class="grid grid-pad">
+    <div *ngFor="let client of clients" (click)="gotoDetail(client)" class="col-1-4">
+        <div class="module hero">
+            <h4>{{client.name}}</h4>
+        </div>
+    </div>
+</div>

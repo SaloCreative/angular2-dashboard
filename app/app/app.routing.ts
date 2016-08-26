@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ClientListComponent }  from '../clients/client-list.component';
+import { ClientDetailComponent }  from '../clients/client-detail.component';
 import { DashboardComponent }   from '../dashboard/dashboard.component';
 import { NotFoundComponent } from "../error/404.component";
 
@@ -12,6 +13,10 @@ const appRoutes: Routes = [
     {
         path: 'clients',
         component: ClientListComponent
+    },
+    {
+        path: 'client/:id',
+        component: ClientDetailComponent
     },
     {
         path: 'dashboard',

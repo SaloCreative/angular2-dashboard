@@ -13,4 +13,8 @@ export class ClientService {
             setTimeout(() => resolve(CLIENTS), 2000) // 2 seconds
         );
     }
+    getClient(id: number): Promise<Client> {
+        return this.getClients()
+            .then(clients => clients.find(client => client.id === id));
+    }
 }
