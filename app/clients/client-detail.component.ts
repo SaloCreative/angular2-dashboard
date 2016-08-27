@@ -23,6 +23,12 @@ export class ClientDetailComponent implements OnInit {
                 .then(client => this.client = client);
         });
     }
+
+    save(): void {
+        this.clientService.update(this.client);
+            //.then(this.goBack);
+    }
+
     goBack(): void {
         window.history.back();
     }

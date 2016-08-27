@@ -17,16 +17,39 @@ export class ClientListComponent implements OnInit {
         private router: Router,
         private clientService: ClientService
     ) { }
+
     getClients(): void {
         this.clientService.getClients()
             .then(clients => this.clients = clients);
     }
+
+    add(name: string): void {
+        name = name.trim();
+        if (!name) { return; }
+        this.clientService.create(name)
+            .then(client => {
+                this.clients.push(client);
+                this.selectedClient = null;
+            });
+    }
+
+    delete(client: Client): void {
+        this.clientService
+            .delete(client.id)
+            .then(() => {
+                this.clients = this.clients.filter(h => h !== client);
+                if (this.selectedClient === client) { this.selectedClient = null; }
+            });
+    }
+
     ngOnInit(): void {
         this.getClients();
     }
+
     onSelect(client: Client): void {
         this.selectedClient = client;
     }
+
     gotoDetail(): void {
         this.router.navigate(['/client', this.selectedClient.id]);
     }
