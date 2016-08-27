@@ -17,6 +17,7 @@ import { ClientSearchComponent }    from '../clients/client-search.component';
 import { ProjectListComponent }  from '../projects/project-list.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { NotFoundComponent } from "../error/404.component";
+import {ProjectDetailComponent} from "../projects/project-detail.component";
 
 @NgModule({
   imports:      [
@@ -32,6 +33,7 @@ import { NotFoundComponent } from "../error/404.component";
       ClientDetailComponent,
       ClientSearchComponent,
       ProjectListComponent,
+      ProjectDetailComponent,
       DashboardComponent,
       NotFoundComponent
   ],
