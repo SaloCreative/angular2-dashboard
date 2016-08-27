@@ -3,6 +3,8 @@ import { ClientListComponent }  from '../clients/client-list.component';
 import { ClientDetailComponent }  from '../clients/client-detail.component';
 import { DashboardComponent }   from '../dashboard/dashboard.component';
 import { NotFoundComponent } from "../error/404.component";
+import {ProjectListComponent} from "../projects/project-list.component";
+import {ProjectDetailComponent} from "../projects/project-detail.component";
 
 const appRoutes: Routes = [
     {
@@ -17,6 +19,14 @@ const appRoutes: Routes = [
     {
         path: 'client/:id',
         component: ClientDetailComponent
+    },
+    {
+        path: 'projects',
+        component: ProjectListComponent
+    },
+    {
+        path: 'project/:id',
+        component: ProjectDetailComponent
     },
     {
         path: 'dashboard',

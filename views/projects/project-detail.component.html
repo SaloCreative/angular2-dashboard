@@ -1,0 +1,19 @@
+<div *ngIf="project">
+    <h2>{{project.name}} details!</h2>
+    <div>
+        <label>id: </label>{{project.id}}</div>
+    <div>
+        <label>name: </label>
+        <input [(ngModel)]="project.name" placeholder="name" />
+    </div>
+    <div>
+        <label>Client: </label>
+        <input [(ngModel)]="project.client" placeholder="client" />
+    </div>
+    <div>
+        <label>Date added: </label>
+        <input [(ngModel)]="project.dateCreated" placeholder="date" />
+    </div>
+    <button (click)="goBack()">Back</button>
+    <button (click)="save()">Save</button>
+</div>
