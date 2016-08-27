@@ -6,7 +6,7 @@ import { ClientService } from '../clients/client.service';
 
 @Component({
     selector: 'dashboard',
-    templateUrl: 'partials/dashboard/dashboard.component.html',
+    templateUrl: 'views/dashboard/dashboard.component.html',
     providers: [ClientService]
 })
 export class DashboardComponent implements OnInit {

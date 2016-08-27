@@ -7,7 +7,7 @@ import { ClientService } from './client.service';
 
 @Component({
     selector: 'client-list',
-    templateUrl: 'partials/clients/client-list.component.html',
+    templateUrl: 'views/clients/client-list.component.html',
     providers: [ClientService]
 })
 export class ClientListComponent implements OnInit {

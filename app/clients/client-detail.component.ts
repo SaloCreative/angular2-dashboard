@@ -5,7 +5,7 @@ import { ClientService } from './client.service';
 
 @Component({
     selector: 'client-detail',
-    templateUrl: 'partials/clients/client-detail.component.html',
+    templateUrl: 'views/clients/client-detail.component.html',
     providers: [ClientService]
 })
 export class ClientDetailComponent implements OnInit {
@@ -25,8 +25,8 @@ export class ClientDetailComponent implements OnInit {
     }
 
     save(): void {
-        this.clientService.update(this.client);
-            //.then(this.goBack);
+        this.clientService.update(this.client)
+            .then(this.goBack);
     }
 
     goBack(): void {
