@@ -20,12 +20,10 @@ const appRoutes: Routes = [
     },
     {
         path: 'dashboard',
-        name: 'dashboard',
         component: DashboardComponent
     },
     {
         path: 'not-found',
-        name: 'NotFound',
         component: NotFoundComponent
     },
     {   path: '**',
