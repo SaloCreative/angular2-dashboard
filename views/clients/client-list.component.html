@@ -12,6 +12,9 @@
         <button class="delete" (click)="delete(client); $event.stopPropagation()">x</button>
     </li>
 </ul>
+<div *ngIf="errorMessage">
+    {{errorMessage}}
+</div>
 <div *ngIf="selectedClient">
     <h2>
         {{selectedClient.name | uppercase}} is my hero

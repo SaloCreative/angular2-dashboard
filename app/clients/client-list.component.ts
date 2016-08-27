@@ -13,6 +13,8 @@ import { ClientService } from './client.service';
 export class ClientListComponent implements OnInit {
     clients: Client[];
     selectedClient: Client;
+    errorMessage: string;
+
     constructor(
         private router: Router,
         private clientService: ClientService
@@ -20,7 +22,8 @@ export class ClientListComponent implements OnInit {
 
     getClients(): void {
         this.clientService.getClients()
-            .then(clients => this.clients = clients);
+            .then(clients => this.clients = clients,
+            error =>  this.errorMessage = <any>error);
     }
 
     add(name: string): void {

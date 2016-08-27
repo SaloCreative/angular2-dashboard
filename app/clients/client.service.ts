@@ -50,8 +50,12 @@ export class ClientService {
             .catch(this.handleError);
     }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
+    private handleError (error: any) {
+        // In a real world app, we might use a remote logging infrastructure
+        // We'd also dig deeper into the error to get a better message
+        let errorMessage = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errorMessage); // log to console instead
+        return Promise.reject(errorMessage);
     }
 }
