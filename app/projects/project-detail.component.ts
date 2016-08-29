@@ -52,6 +52,11 @@ export class ProjectDetailComponent implements OnInit {
                 }, 3000);
     }
 
+    delete():void {
+        this.projectService.delete(this.project.id)
+            .then(this.goBack);
+    }
+
     // TODO: Remove this when we're done
     get diagnostic() { return JSON.stringify(this.project); }
 }
