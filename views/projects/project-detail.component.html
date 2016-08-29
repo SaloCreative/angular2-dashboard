@@ -2,7 +2,11 @@
     <h2>{{project.name}} details!</h2>
     <p>Created on: {{project.dateCreated}}
     <br> id: {{project.id}}</p>
-    <form>
+    <div [hidden]="!submitted">
+        <h2>Project successfully updated</h2>
+    </div>
+
+<form (ngSubmit)="onSubmit()" #projectEditForm="ngForm">
         <div>
             <label>name: </label>
             <input [(ngModel)]="project.name" placeholder="name" name="name" #name="ngModel" required/>
@@ -25,7 +29,7 @@
                 <option *ngFor="let s of projectStatus" value="{{s}}" [selected]="s == project.status">{{s}}</option>
             </select>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" [disabled]="!projectEditForm.form.valid">Submit</button>
     </form>
     <a routerLink="/projects">Back to Projects</a>
     <button (click)="save()">Save</button>
