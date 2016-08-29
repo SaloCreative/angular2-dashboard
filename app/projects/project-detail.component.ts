@@ -46,7 +46,10 @@ export class ProjectDetailComponent implements OnInit {
 
     onSubmit() {
         this.projectService.update(this.project)
-            .then(this.submitted = true);
+            .then( this.submitted = true,
+                setTimeout(() => {
+                    this.submitted = false
+                }, 3000);
     }
 
     // TODO: Remove this when we're done
