@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router'
+import { Router, ActivatedRoute, Params } from '@angular/router'
 import { Project } from './project';
 import { ProjectService } from './project.service';
 import { Client } from '../clients/client';
@@ -13,6 +13,9 @@ import { ClientService } from '../clients/client.service';
 export class ProjectDetailComponent implements OnInit {
     project: Project;
     clients: Client[] = [];
+    projectStatus = ['Draft', 'Pending agreement',
+        'In progress', 'Invoiced', 'Complete'];
+
 
     constructor(
         private projectService: ProjectService,
@@ -38,4 +41,11 @@ export class ProjectDetailComponent implements OnInit {
     goBack(): void {
         window.history.back();
     }
+
+    submitted = false;
+
+    onSubmit() { this.submitted = true; }
+
+    // TODO: Remove this when we're done
+    get diagnostic() { return JSON.stringify(this.project); }
 }

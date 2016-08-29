@@ -1,21 +1,32 @@
 <div *ngIf="project">
     <h2>{{project.name}} details!</h2>
-    <div>
-        <label>id: </label>{{project.id}}</div>
-    <div>
-        <label>name: </label>
-        <input [(ngModel)]="project.name" placeholder="name" />
-    </div>
-    <div>
-        <label>Client: </label>
-        <select [(ngModel)]="project.client" name="client">
-            <option *ngFor="let client of clients" (click)="gotoDetail(client)" value="{{client.id}}" [selected]="client.id == project.client">{{client.name}}</option>
-        </select>
-    </div>
-    <div>
-        <label>Date added: </label>
-        <input [(ngModel)]="project.dateCreated" placeholder="date" />
-    </div>
-    <button (click)="goBack()">Back</button>
+    <p>Created on: {{project.dateCreated}}
+    <br> id: {{project.id}}</p>
+    <form>
+        <div>
+            <label>name: </label>
+            <input [(ngModel)]="project.name" placeholder="name" name="name" #name="ngModel" required/>
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+        <div>
+            <label>Client: </label>
+            <select [(ngModel)]="project.client" name="client" #client="ngModel" required>
+                <option value="">Please select client ...</option>
+                <option *ngFor="let client of clients" value="{{client.id}}" [selected]="client.id == project.client">{{client.name}}</option>
+            </select>
+            <div [hidden]="client.valid || client.pristine" class="alert alert-danger">
+                Client is required
+            </div>
+        </div>
+        <div>
+            <select>
+                <option *ngFor="let status of projectStatus" value="{{status}}">{{status}}</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <a routerLink="/projects">Back to Projects</a>
     <button (click)="save()">Save</button>
 </div>
