@@ -15,7 +15,7 @@ export class ProjectDetailComponent implements OnInit {
     clients: Client[] = [];
     projectStatus = ['Draft', 'Pending agreement',
         'In progress', 'Invoiced', 'Complete'];
-
+    submitted = false;
 
     constructor(
         private projectService: ProjectService,
@@ -42,21 +42,16 @@ export class ProjectDetailComponent implements OnInit {
         window.history.back();
     }
 
-    submitted = false;
-
     onSubmit() {
-        this.projectService.update(this.project)
-            .then( this.submitted = true,
-                setTimeout(() => {
-                    this.submitted = false
-                }, 3000);
+        this.projectService.update(this.project);
+        this.submitted = true;
+        setTimeout(function() {
+            this.submitted = false;
+        }.bind(this), 3000);
     }
 
     delete():void {
         this.projectService.delete(this.project.id)
             .then(this.goBack);
     }
-
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.project); }
 }
