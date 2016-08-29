@@ -21,8 +21,8 @@
             </div>
         </div>
         <div>
-            <select>
-                <option *ngFor="let status of projectStatus" value="{{status}}">{{status}}</option>
+            <select [(ngModel)]="project.status" name="status" required>
+                <option *ngFor="let s of projectStatus" value="{{s}}" [selected]="s == project.status">{{s}}</option>
             </select>
         </div>
         <button type="submit">Submit</button>
