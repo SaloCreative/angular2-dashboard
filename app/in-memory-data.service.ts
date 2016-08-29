@@ -15,16 +15,16 @@ export class InMemoryDataService implements InMemoryDbService {
             {id: 20, name: 'Tornado'}
         ],
         projects = [
-            {id: 1, name: 'Project 1', client : '12', dateCreated : ''},
-            {id: 2, name: 'Project 2', client : '12', dateCreated : ''},
-            {id: 3, name: 'Project 3', client : '12', dateCreated : ''},
-            {id: 4, name: 'Project 4', client : '16', dateCreated : ''},
-            {id: 5, name: 'Project 5', client : '12', dateCreated : ''},
-            {id: 6, name: 'Project 6', client : '12', dateCreated : ''},
-            {id: 7, name: 'Project 7', client : '20', dateCreated : ''},
-            {id: 8, name: 'Project 8', client : '12', dateCreated : ''},
-            {id: 9, name: 'Project 9', client : '12', dateCreated : ''},
-            {id: 10, name: 'Project 10', client : '11', dateCreated : ''}
+            {id: 1, name: 'Project 1', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 2, name: 'Project 2', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 3, name: 'Project 3', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 4, name: 'Project 4', client : '16', status : 'In progress', dateCreated : ''},
+            {id: 5, name: 'Project 5', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 6, name: 'Project 6', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 7, name: 'Project 7', client : '20', status : 'In progress', dateCreated : ''},
+            {id: 8, name: 'Project 8', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 9, name: 'Project 9', client : '12', status : 'In progress', dateCreated : ''},
+            {id: 10, name: 'Project 10', client : '11', status : 'In progress', dateCreated : ''}
         ];
         return {clients, projects};
     }
