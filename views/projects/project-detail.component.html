@@ -8,7 +8,9 @@
     </div>
     <div>
         <label>Client: </label>
-        <input [(ngModel)]="project.client" placeholder="client" />
+        <select [(ngModel)]="project.client" name="client">
+            <option *ngFor="let client of clients" (click)="gotoDetail(client)" value="{{client.id}}" [selected]="client.id == project.client">{{client.name}}</option>
+        </select>
     </div>
     <div>
         <label>Date added: </label>

@@ -37,7 +37,7 @@ export class ClientSearchComponent implements OnInit {
             });
     }
     gotoDetail(client: Client): void {
-        let link = ['/client', client.id];
+        let link = ['/clients', client.id];
         this.router.navigate(link);
     }
 }

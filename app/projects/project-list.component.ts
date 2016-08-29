@@ -57,6 +57,6 @@ export class ProjectListComponent implements OnInit {
     }
 
     gotoDetail():void {
-        this.router.navigate(['/project', this.selectedProject.id]);
+        this.router.navigate(['/projects', this.selectedProject.id]);
     }
 }

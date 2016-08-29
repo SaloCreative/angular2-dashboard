@@ -2,17 +2,21 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router'
 import { Project } from './project';
 import { ProjectService } from './project.service';
+import { Client } from '../clients/client';
+import { ClientService } from '../clients/client.service';
 
 @Component({
     selector: 'project-detail',
     templateUrl: 'views/projects/project-detail.component.html',
-    providers: [ProjectService]
+    providers: [ProjectService, ClientService]
 })
 export class ProjectDetailComponent implements OnInit {
     project: Project;
+    clients: Client[] = [];
 
     constructor(
         private projectService: ProjectService,
+        private clientService: ClientService,
         private route: ActivatedRoute) {
     }
 
@@ -22,6 +26,8 @@ export class ProjectDetailComponent implements OnInit {
             this.projectService.getProject(id)
                 .then(project => this.project = project);
         });
+        this.clientService.getClients()
+            .then(clients => this.clients = clients);
     }
 
     save(): void {

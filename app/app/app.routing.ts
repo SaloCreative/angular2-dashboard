@@ -17,7 +17,7 @@ const appRoutes: Routes = [
         component: ClientListComponent
     },
     {
-        path: 'client/:id',
+        path: 'clients/:id',
         component: ClientDetailComponent
     },
     {
@@ -25,7 +25,7 @@ const appRoutes: Routes = [
         component: ProjectListComponent
     },
     {
-        path: 'project/:id',
+        path: 'projects/:id',
         component: ProjectDetailComponent
     },
     {
