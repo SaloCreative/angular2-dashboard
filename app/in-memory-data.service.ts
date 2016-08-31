@@ -2,7 +2,7 @@ import { InMemoryDbService } from 'angular2-in-memory-web-api';
 
 export class InMemoryDataService implements InMemoryDbService {
     createDb() {
-        let clients = [
+       /* let clients = [
             {id: 11, name: 'Mr. Nice'},
             {id: 12, name: 'Narco'},
             {id: 13, name: 'Bombasto'},
@@ -13,8 +13,8 @@ export class InMemoryDataService implements InMemoryDbService {
             {id: 18, name: 'Dr IQ'},
             {id: 19, name: 'Magma'},
             {id: 20, name: 'Tornado'}
-        ],
-        projects = [
+        ],*/
+        let projects = [
             {id: 1, name: 'Project 1', client : '12', status : 'In progress', dateCreated : ''},
             {id: 2, name: 'Project 2', client : '12', status : 'In progress', dateCreated : ''},
             {id: 3, name: 'Project 3', client : '12', status : 'In progress', dateCreated : ''},
@@ -26,6 +26,6 @@ export class InMemoryDataService implements InMemoryDbService {
             {id: 9, name: 'Project 9', client : '12', status : 'In progress', dateCreated : ''},
             {id: 10, name: 'Project 10', client : '11', status : 'In progress', dateCreated : ''}
         ];
-        return {clients, projects};
+        return {projects};
     }
 }

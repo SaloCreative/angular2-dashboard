@@ -1,4 +1,4 @@
 export class Client {
-    id: number;
-    name: string;
+    fldClientID: number;
+    fldCompanyName: string;
 }

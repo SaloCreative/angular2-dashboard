@@ -7,8 +7,8 @@
 </div>
 <ul class="clients">
     <li *ngFor="let client of clients" [class.selected]="client === selectedClient" (click)="onSelect(client)">
-        <span class="badge">{{client.id}}</span>
-        <span>{{client.name}}</span>
+        <span class="badge">{{client.fldClientID}}</span>
+        <span>{{client.fldCompanyName}}</span>
         <button class="delete" (click)="delete(client); $event.stopPropagation()">x</button>
     </li>
 </ul>
@@ -17,7 +17,7 @@
 </div>
 <div *ngIf="selectedClient">
     <h2>
-        {{selectedClient.name | uppercase}} is my hero
+        {{selectedClient.fldCompanyName | uppercase}} is my hero
     </h2>
     <button (click)="gotoDetail()">View Details</button>
 </div>

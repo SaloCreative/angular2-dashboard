@@ -9,24 +9,29 @@ import { Client } from './client';
 export class ClientService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private clientsUrl = 'dist/clients';  // URL to web api
+    private clientsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/clients';
+    private clientsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/clients/';
+    //private clientsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients';  // URL to web api
+    //private clientsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients/';  // URL to web api
 
     constructor(private http: Http) { }
 
     getClients(): Promise<Client[]> {
-        return this.http.get(this.clientsUrl)
+        return this.http.get(this.clientsAllUrl)
             .toPromise()
-            .then(response => response.json().data as Client[])
+            .then(response => response.json() as Client[])
             .catch(this.handleError);
     }
 
     getClient(id: number): Promise<Client> {
-        return this.getClients()
-            .then(clients => clients.find(client => client.id === id));
+        return this.http.get(this.clientsSingularUrl + id)
+            .toPromise()
+            .then(response => response.json() as Client)
+            .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        let url = `${this.clientsUrl}/${id}`;
+        let url = `${this.clientsSingularUrl}/${id}`;
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
@@ -35,14 +40,14 @@ export class ClientService {
 
     create(name: string): Promise<Client> {
         return this.http
-            .post(this.clientsUrl, JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.clientsSingularUrl, JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(client: Client): Promise<Client> {
-        const url = `${this.clientsUrl}/${client.id}`;
+        const url = `${this.clientsSingularUrl}/${client.fldClientID}`;
         return this.http
             .put(url, JSON.stringify(client), {headers: this.headers})
             .toPromise()

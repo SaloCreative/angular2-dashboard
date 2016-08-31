@@ -51,7 +51,7 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     delete():void {
-        this.projectService.delete(this.project.id)
+        this.projectService.delete(this.project.fldProjectID)
             .then(this.goBack);
     }
 }

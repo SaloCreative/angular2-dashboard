@@ -9,24 +9,28 @@ import { Project } from './project';
 export class ProjectService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private projectsUrl = 'dist/projects';  // URL to web api
-
+    //private projectsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';  // URL to web api
+    //private projectsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects/';  // URL to w
+    private projectsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
+    private projectsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects/';
     constructor(private http: Http) { }
 
     getProjects(): Promise<Project[]> {
-        return this.http.get(this.projectsUrl)
+        return this.http.get(this.projectsAllUrl)
             .toPromise()
-            .then(response => response.json().data as Project[])
+            .then(response => response.json() as Project[])
             .catch(this.handleError);
     }
 
     getProject(id: number): Promise<Project> {
-        return this.getProjects()
-            .then(projects => projects.find(project => project.id === id));
+        return this.http.get(this.projectsSingularUrl + id)
+            .toPromise()
+            .then(response => response.json() as Project)
+            .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        let url = `${this.projectsUrl}/${id}`;
+        let url = `${this.projectsSingularUrl}/${id}`;
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
@@ -35,14 +39,14 @@ export class ProjectService {
 
     create(name: string): Promise<Project> {
         return this.http
-            .post(this.projectsUrl, JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.projectsSingularUrl, JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(project: Project): Promise<Project> {
-        const url = `${this.projectsUrl}/${project.id}`;
+        const url = `${this.projectsSingularUrl}/${project.fldProjectID}`;
         return this.http
             .put(url, JSON.stringify(project), {headers: this.headers})
             .toPromise()

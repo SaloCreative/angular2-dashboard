@@ -26,10 +26,10 @@ export class ClientListComponent implements OnInit {
             error =>  this.errorMessage = <any>error);
     }
 
-    add(name: string): void {
-        name = name.trim();
-        if (!name) { return; }
-        this.clientService.create(name)
+    add(fldCompanyName: string): void {
+        fldCompanyName = fldCompanyName.trim();
+        if (!fldCompanyName) { return; }
+        this.clientService.create(fldCompanyName)
             .then(client => {
                 this.clients.push(client);
                 this.selectedClient = null;
@@ -38,12 +38,14 @@ export class ClientListComponent implements OnInit {
 
     delete(client: Client): void {
         this.clientService
-            .delete(client.id)
+            .delete(client.fldClientID)
             .then(() => {
                 this.clients = this.clients.filter(h => h !== client);
                 if (this.selectedClient === client) { this.selectedClient = null; }
             });
     }
+
+
 
     ngOnInit(): void {
         this.getClients();
@@ -54,6 +56,6 @@ export class ClientListComponent implements OnInit {
     }
 
     gotoDetail(): void {
-        this.router.navigate(['/clients', this.selectedClient.id]);
+        this.router.navigate(['/clients', this.selectedClient.fldClientID]);
     }
 }

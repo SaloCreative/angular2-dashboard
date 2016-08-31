@@ -37,26 +37,8 @@ export class ProjectListComponent implements OnInit {
             });
     }
 
-    delete(project:Project):void {
-        this.projectService
-            .delete(project.id)
-            .then(() => {
-                this.projects = this.projects.filter(h => h !== project);
-                if (this.selectedProject === project) {
-                    this.selectedProject = null;
-                }
-            });
-    }
-
     ngOnInit():void {
         this.getProjects();
     }
 
-    onSelect(project:Project):void {
-        this.selectedProject = project;
-    }
-
-    gotoDetail():void {
-        this.router.navigate(['/projects', this.selectedProject.id]);
-    }
 }
