@@ -30,8 +30,7 @@ export class ProjectService {
     }
 
     delete(id: number): Promise<void> {
-        let url = `${this.projectsSingularUrl}/${id}`;
-        return this.http.delete(url, {headers: this.headers})
+        return this.http.delete(this.projectsSingularUrl + id, {headers: this.headers})
             .toPromise()
             .then(() => null)
             .catch(this.handleError);

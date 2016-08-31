@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 
 import { Project } from './project';
 import { ProjectService } from './project.service';
+import { OrderBy } from "../app/app.orderBy"
 
 
 @Component({
     selector: 'project-list',
     templateUrl: 'views/projects/project-list.component.html',
+    pipes: [OrderBy],
     providers: [ProjectService]
 })
 export class ProjectListComponent implements OnInit {

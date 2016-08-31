@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrderBy } from "../app/app.orderBy"
 
 import { Client } from './client';
 import { ClientService } from './client.service';
@@ -8,6 +9,7 @@ import { ClientService } from './client.service';
 @Component({
     selector: 'client-list',
     templateUrl: 'views/clients/client-list.component.html',
+    pipes: [OrderBy],
     providers: [ClientService]
 })
 export class ClientListComponent implements OnInit {

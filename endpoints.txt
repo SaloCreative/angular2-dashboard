@@ -1,0 +1,38 @@
+clients
+
+clients/id
+ - delete
+ - put
+ - post
+
+projects
+
+projects by status (eg. projects/?status=3)
+
+project count (eg. projects/?count=true)
+
+project count by status (eg. projects/?status=3&count=true)
+
+projects by client (eg. projects/?client=34)
+
+projects count by client (eg. projects/?client=34&count=true)
+
+projects/id
+ - delete
+ - put
+ - post
+
+project statuses
+
+logs by type & project (eg. logs/?project=2134&type=2)
+
+contacts
+
+contacts by client
+
+contacts/$id
+ - delete
+ - put
+ - post
+
+
