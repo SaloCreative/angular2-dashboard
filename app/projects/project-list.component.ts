@@ -26,12 +26,6 @@ export class ProjectListComponent implements OnInit {
                 private projectService:ProjectService) {
     }
 
-    getProjects():void {
-        this.projectService.getProjects()
-            .then(projects => this.projects = projects,
-                error =>  this.errorMessage = <any>error);
-    }
-
     getProjectsByPage(page: number) {
         let perPage = 50;
         this.loading = true;

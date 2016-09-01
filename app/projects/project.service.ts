@@ -14,13 +14,6 @@ export class ProjectService {
 
     constructor(private http: Http) { }
 
-    getProjects(): Promise<Project[]> {
-        return this.http.get(this.projectsUrl)
-            .toPromise()
-            .then(response => response.json() as Project[])
-            .catch(this.handleError);
-    }
-
     getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
         return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
             .map(res => <Project[]> res.json().data)
