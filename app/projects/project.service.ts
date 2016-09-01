@@ -3,7 +3,7 @@ import { Headers, Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { Project, ProjectMeta } from './project';
+import { Project, ProjectMeta, ProjectStatus } from './project';
 
 @Injectable()
 export class ProjectService {
@@ -17,6 +17,18 @@ export class ProjectService {
     getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
         return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
             .map(res => <Project[]> res.json().data)
+            .catch(this.observableHandleError);
+    }
+
+    getProjectsMeta(): Observable<ProjectMeta[]> {
+        return this.http.get(this.projectsUrl + '/meta')
+            .map(res => <ProjectMeta[]> res.json().total)
+            .catch(this.observableHandleError);
+    }
+
+    getProjectStatus(): Observable<ProjectStatus[]> {
+        return this.http.get(this.projectsUrl + '/statuses')
+            .map(res => <ProjectStatus[]> res.json())
             .catch(this.observableHandleError);
     }
 

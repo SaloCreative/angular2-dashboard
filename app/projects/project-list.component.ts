@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
-import { Project } from './project';
+import { Project, ProjectMeta } from './project';
 import { ProjectService } from './project.service';
 import { OrderBy } from "../app/app.orderBy";
 
@@ -15,6 +15,7 @@ import { OrderBy } from "../app/app.orderBy";
 })
 export class ProjectListComponent implements OnInit {
     projects:Project[];
+    projectsMeta:ProjectMeta[];
     selectedProject:Project;
     errorMessage:string;
     private total: number;
@@ -40,6 +41,14 @@ export class ProjectListComponent implements OnInit {
                 error =>  this.errorMessage = <any>error);
     }
 
+    getProjectsMeta() {
+        this.projectService.getProjectsMeta()
+            .subscribe(
+                projectsMeta => {
+                    this.projectsMeta = projectsMeta;
+                },
+                error =>  this.errorMessage = <any>error);
+    }
 
     add(name:string):void {
         name = name.trim();
@@ -55,6 +64,7 @@ export class ProjectListComponent implements OnInit {
 
     ngOnInit():void {
         this.getProjectsByPage(1);
+        this.getProjectsMeta();
     }
 
 }

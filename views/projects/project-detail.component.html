@@ -1,7 +1,6 @@
 <div *ngIf="project">
     <h2>{{project.fldTitle}} details!</h2>
     <p>Created on: {{project.fldDateAdded}} - {{project.fldDateAdded * 1000 | date: 'dd/MM/yyyy'}}
-    <!--<br>Status: {{project.status.fldName}}-->
     <br>id: {{project.fldProjectID}}</p>
     <div [hidden]="!submitted">
         <h2>Project successfully updated</h2>
@@ -29,8 +28,9 @@
             </div>
         </div>
         <div>
+            <label>Project status: </label>
             <select [(ngModel)]="project.fldProjectStatusID" name="fldProjectStatusID" required>
-                <option *ngFor="let s of fldProjectStatusID" value="{{s}}" [selected]="s == project.fldProjectStatusID">{{s}}</option>
+                <option *ngFor="let s of projectStatus" value="{{s.fldProjectStatusID}}" [selected]="s.fldProjectStatusID == project.fldProjectStatusID">{{s.fldName}}</option>
             </select>
         </div>
         <button type="submit" [disabled]="!projectEditForm.form.valid">Submit</button>

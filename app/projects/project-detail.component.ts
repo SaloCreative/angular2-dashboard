@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router'
-import { Project } from './project';
+import { Project, ProjectStatus } from './project';
 import { ProjectService } from './project.service';
 import { Client } from '../clients/client';
 import { ClientService } from '../clients/client.service';
@@ -13,9 +13,9 @@ import { ClientService } from '../clients/client.service';
 export class ProjectDetailComponent implements OnInit {
     project: Project;
     clients: Client[] = [];
-    projectStatus = ['Draft', 'Pending agreement',
-        'In progress', 'Invoiced', 'Complete'];
+    projectStatus: ProjectStatus[] = [];
     submitted = false;
+    errorMessage:string;
 
     constructor(
         private projectService: ProjectService,
@@ -31,6 +31,7 @@ export class ProjectDetailComponent implements OnInit {
         });
         this.clientService.getClients()
             .then(clients => this.clients = clients);
+        this.getProjectStatus();
     }
 
     save(): void {
@@ -53,5 +54,14 @@ export class ProjectDetailComponent implements OnInit {
     delete():void {
         this.projectService.delete(this.project.fldProjectID)
             .then(this.goBack);
+    }
+
+    getProjectStatus() {
+        this.projectService.getProjectStatus()
+            .subscribe(
+                projectStatus => {
+                    this.projectStatus = projectStatus;
+                },
+                error =>  this.errorMessage = <any>error);
     }
 }

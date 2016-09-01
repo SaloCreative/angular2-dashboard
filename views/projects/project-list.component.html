@@ -8,6 +8,7 @@
 <div *ngIf="errorMessage">
     {{errorMessage}}
 </div>
+<p *ngFor="let meta of projectsMeta">{{projectsMeta.total}}</p>
 <ul class="clients">
     <li *ngFor="let project of projects | paginate: { itemsPerPage: 50, currentPage: page, totalItems: total }">
         <span class="badge">{{project.fldProjectID}}</span>
