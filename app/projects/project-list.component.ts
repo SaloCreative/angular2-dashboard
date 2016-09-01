@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { Project } from './project';
 import { ProjectService } from './project.service';
-import { OrderBy } from "../app/app.orderBy"
+import { OrderBy } from "../app/app.orderBy";
 
 
 @Component({
@@ -17,7 +17,6 @@ export class ProjectListComponent implements OnInit {
     projects:Project[];
     selectedProject:Project;
     errorMessage:string;
-    ]
     private total: number;
 
     page: number = 1;
@@ -35,15 +34,16 @@ export class ProjectListComponent implements OnInit {
 
     getProjectsByPage(page: number) {
         let perPage = 50;
-        this.total = 1553;
         this.loading = true;
         this.projectService.getProjectsByPage(page, perPage)
-            .then(projects => {
-                this.projects = projects;
-                this.page = page;
-                this.loading = false;
-            },
-            error =>  this.errorMessage = <any>error);
+            .subscribe(
+                projects => {
+                    this.projects = projects;
+                    this.total = 1616;
+                    this.page = page;
+                    this.loading = false;
+                },
+                error =>  this.errorMessage = <any>error);
     }
 
 

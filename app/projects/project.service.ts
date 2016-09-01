@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-
+import { Headers, Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Project } from './project';
@@ -9,10 +9,10 @@ import { Project } from './project';
 export class ProjectService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private projectsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';  // URL to web api
-    private projectsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects/';  // URL to w
-    //private projectsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
-    //private projectsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects/';
+    //private projectsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';  // URL to web api
+    //private projectsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects/';  // URL to w
+    private projectsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
+    private projectsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects/';
     constructor(private http: Http) { }
 
     getProjects(): Promise<Project[]> {
@@ -22,11 +22,10 @@ export class ProjectService {
             .catch(this.handleError);
     }
 
-    getProjectsByPage(page: number, perPage: number): Promise<Project[]> {
+    getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
         return this.http.get(this.projectsAllUrl + '?perPage=' + perPage + '&page=' + page)
-            .toPromise()
-            .then(response => response.json().data as Project[])
-            .catch(this.handleError);
+            .map(res => <Project[]> res.json().data)
+            .catch(this.observableHandleError);
     }
 
     getProject(id: number): Promise<Project> {
@@ -67,5 +66,14 @@ export class ProjectService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errorMessage); // log to console instead
         return Promise.reject(errorMessage);
+    }
+
+    private observableHandleError (error: any) {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
+        let errorMessage = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(error);
+        return Observable.throw(errorMessage || 'Server error');
     }
 }
