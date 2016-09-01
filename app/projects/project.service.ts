@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-
+import { Headers, Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Project } from './project';
@@ -20,6 +20,12 @@ export class ProjectService {
             .toPromise()
             .then(response => response.json() as Project[])
             .catch(this.handleError);
+    }
+
+    getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
+        return this.http.get(this.projectsAllUrl + '?perPage=' + perPage + '&page=' + page)
+            .map(res => <Project[]> res.json().data)
+            .catch(this.observableHandleError);
     }
 
     getProject(id: number): Promise<Project> {
@@ -60,5 +66,14 @@ export class ProjectService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errorMessage); // log to console instead
         return Promise.reject(errorMessage);
+    }
+
+    private observableHandleError (error: any) {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
+        let errorMessage = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(error);
+        return Observable.throw(errorMessage || 'Server error');
     }
 }

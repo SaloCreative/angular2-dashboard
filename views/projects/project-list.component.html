@@ -9,8 +9,9 @@
     {{errorMessage}}
 </div>
 <ul class="clients">
-    <li *ngFor="let project of projects | orderBy : ['-fldProjectID']">
+    <li *ngFor="let project of projects | paginate: { itemsPerPage: 50, currentPage: page, totalItems: total }">
         <span class="badge">{{project.fldProjectID}}</span>
         <a routerLink="/projects/{{project.fldProjectID}}">{{project.fldTitle}}</a>
     </li>
 </ul>
+<pagination-controls (pageChange)="getProjectsByPage($event)"></pagination-controls>
