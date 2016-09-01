@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { Project } from './project';
 import { ProjectService } from './project.service';
 import { OrderBy } from "../app/app.orderBy"
@@ -9,8 +9,9 @@ import { OrderBy } from "../app/app.orderBy"
 @Component({
     selector: 'project-list',
     templateUrl: 'views/projects/project-list.component.html',
-    pipes: [OrderBy],
-    providers: [ProjectService]
+    pipes: [PaginatePipe, OrderBy],
+    providers: [ProjectService, PaginationService],
+    directives: [PaginationControlsCmp]
 })
 export class ProjectListComponent implements OnInit {
     projects:Project[];
