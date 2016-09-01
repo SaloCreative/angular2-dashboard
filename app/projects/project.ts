@@ -5,3 +5,7 @@ export class Project {
     fldProjectStatusID : number;
     fldDateAdded : number;
 }
+
+export class ProjectMeta {
+    total : number;
+}

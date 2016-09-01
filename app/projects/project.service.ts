@@ -3,40 +3,39 @@ import { Headers, Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { Project } from './project';
+import { Project, ProjectMeta } from './project';
 
 @Injectable()
 export class ProjectService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    //private projectsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';  // URL to web api
-    //private projectsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects/';  // URL to w
-    private projectsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
-    private projectsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects/';
+    //private projectsUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';
+    private projectsUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
+
     constructor(private http: Http) { }
 
     getProjects(): Promise<Project[]> {
-        return this.http.get(this.projectsAllUrl)
+        return this.http.get(this.projectsUrl)
             .toPromise()
             .then(response => response.json() as Project[])
             .catch(this.handleError);
     }
 
     getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
-        return this.http.get(this.projectsAllUrl + '?perPage=' + perPage + '&page=' + page)
+        return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
             .map(res => <Project[]> res.json().data)
             .catch(this.observableHandleError);
     }
 
     getProject(id: number): Promise<Project> {
-        return this.http.get(this.projectsSingularUrl + id)
+        return this.http.get(this.projectsUrl + '/' + id)
             .toPromise()
             .then(response => response.json() as Project)
             .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        return this.http.delete(this.projectsSingularUrl + id, {headers: this.headers})
+        return this.http.delete(this.projectsUrl + '/' + id, {headers: this.headers})
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
@@ -44,14 +43,14 @@ export class ProjectService {
 
     create(name: string): Promise<Project> {
         return this.http
-            .post(this.projectsSingularUrl, JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.projectsUrl + '/', JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(project: Project): Promise<Project> {
-        const url = `${this.projectsSingularUrl}/${project.fldProjectID}`;
+        const url = `${this.projectsUrl}/${project.fldProjectID}`;
         return this.http
             .put(url, JSON.stringify(project), {headers: this.headers})
             .toPromise()
