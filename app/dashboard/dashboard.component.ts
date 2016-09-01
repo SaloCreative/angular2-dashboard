@@ -20,11 +20,12 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.clientService.getClients()
-            .then(clients => this.clients = clients.slice(1, 5));
+            .then(clients => this.clients = clients);
+        console.log(this.clients);
     }
 
     gotoDetail(client: Client): void {
-        let link = ['/client', client.id];
+        let link = ['/clients', client.fldClientID];
         this.router.navigate(link);
     }
 }

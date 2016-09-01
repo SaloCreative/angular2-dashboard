@@ -1,32 +1,36 @@
 <div *ngIf="project">
-    <h2>{{project.name}} details!</h2>
-    <p>Created on: {{project.dateCreated}}
-    <br> id: {{project.id}}</p>
+    <h2>{{project.fldTitle}} details!</h2>
+    <p>Created on: {{project.fldDateAdded}} - {{project.fldDateAdded * 1000 | date: 'dd/MM/yyyy'}}
+    <!--<br>Status: {{project.status.fldName}}-->
+    <br>id: {{project.fldProjectID}}</p>
     <div [hidden]="!submitted">
         <h2>Project successfully updated</h2>
+    </div>
+    <div *ngIf="errorMessage">
+        {{errorMessage}}
     </div>
 
 <form (ngSubmit)="onSubmit()" #projectEditForm="ngForm">
         <div>
             <label>name: </label>
-            <input [(ngModel)]="project.name" placeholder="name" name="name" #name="ngModel" required/>
-            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+            <input [(ngModel)]="project.fldTitle" placeholder="name" name="fldTitle" #fldTitle="ngModel" required/>
+            <div [hidden]="fldTitle.valid || fldTitle.pristine" class="alert alert-danger">
                 Name is required
             </div>
         </div>
         <div>
             <label>Client: </label>
-            <select [(ngModel)]="project.client" name="client" #client="ngModel" required>
+            <select [(ngModel)]="project.fldClientID" name="fldClientID" #fldClientID="ngModel" required>
                 <option value="">Please select client ...</option>
-                <option *ngFor="let client of clients" value="{{client.id}}" [selected]="client.id == project.client">{{client.name}}</option>
+                <option *ngFor="let client of clients" value="{{client.fldClientID}}" [selected]="client.fldClientID == project.fldClientID">{{client.fldCompanyName}}</option>
             </select>
-            <div [hidden]="client.valid || client.pristine" class="alert alert-danger">
+            <div [hidden]="fldClientID.valid || fldClientID.pristine" class="alert alert-danger">
                 Client is required
             </div>
         </div>
         <div>
-            <select [(ngModel)]="project.status" name="status" required>
-                <option *ngFor="let s of projectStatus" value="{{s}}" [selected]="s == project.status">{{s}}</option>
+            <select [(ngModel)]="project.fldProjectStatusID" name="fldProjectStatusID" required>
+                <option *ngFor="let s of fldProjectStatusID" value="{{s}}" [selected]="s == project.fldProjectStatusID">{{s}}</option>
             </select>
         </div>
         <button type="submit" [disabled]="!projectEditForm.form.valid">Submit</button>

@@ -1,10 +1,10 @@
 <div *ngIf="client">
-    <h2>{{client.name}} details!</h2>
+    <h2>{{client.fldCompanyName}} details!</h2>
     <div>
-        <label>id: </label>{{client.id}}</div>
+        <label>id: </label>{{client.fldClientID}}</div>
     <div>
         <label>name: </label>
-        <input [(ngModel)]="client.name" placeholder="name" />
+        <input [(ngModel)]="client.fldCompanyName" placeholder="name" />
     </div>
     <button (click)="goBack()">Back</button>
     <button (click)="save()">Save</button>

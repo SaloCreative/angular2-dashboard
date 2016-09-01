@@ -1,4 +1,4 @@
-import { Injectable }     from '@angular/core';
+/*import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
@@ -12,4 +12,4 @@ export class ClientSearchService {
             .get(`dist/clients/?name=${term}`)
             .map((r: Response) => r.json().data as Client[]);
     }
-}
+}*/

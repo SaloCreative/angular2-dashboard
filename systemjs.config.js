@@ -7,6 +7,7 @@
   var map = {
     'app':                        'dist', // 'dist',
     '@angular':                   'node_modules/@angular',
+    'ng2-pagination':             'node_modules/ng2-pagination',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs'
   };
@@ -15,6 +16,7 @@
     'app':                        { main: 'main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'ng2-pagination':             { main: 'index.js', defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',

@@ -1,7 +1,7 @@
 export class Project {
-    id: number;
-    name: string;
-    client : number;
-    status : string;
-    dateCreated : string;
+    fldProjectID: number;
+    fldTitle: string;
+    fldClientID : number;
+    fldProjectStatusID : number;
+    fldDateAdded : number;
 }

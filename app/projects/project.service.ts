@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-
+import { Headers, Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Project } from './project';
@@ -9,25 +9,34 @@ import { Project } from './project';
 export class ProjectService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private projectsUrl = 'dist/projects';  // URL to web api
-
+    //private projectsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';  // URL to web api
+    //private projectsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects/';  // URL to w
+    private projectsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
+    private projectsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects/';
     constructor(private http: Http) { }
 
     getProjects(): Promise<Project[]> {
-        return this.http.get(this.projectsUrl)
+        return this.http.get(this.projectsAllUrl)
             .toPromise()
-            .then(response => response.json().data as Project[])
+            .then(response => response.json() as Project[])
             .catch(this.handleError);
     }
 
+    getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
+        return this.http.get(this.projectsAllUrl + '?perPage=' + perPage + '&page=' + page)
+            .map(res => <Project[]> res.json().data)
+            .catch(this.observableHandleError);
+    }
+
     getProject(id: number): Promise<Project> {
-        return this.getProjects()
-            .then(projects => projects.find(project => project.id === id));
+        return this.http.get(this.projectsSingularUrl + id)
+            .toPromise()
+            .then(response => response.json() as Project)
+            .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        let url = `${this.projectsUrl}/${id}`;
-        return this.http.delete(url, {headers: this.headers})
+        return this.http.delete(this.projectsSingularUrl + id, {headers: this.headers})
             .toPromise()
             .then(() => null)
             .catch(this.handleError);
@@ -35,14 +44,14 @@ export class ProjectService {
 
     create(name: string): Promise<Project> {
         return this.http
-            .post(this.projectsUrl, JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.projectsSingularUrl, JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(project: Project): Promise<Project> {
-        const url = `${this.projectsUrl}/${project.id}`;
+        const url = `${this.projectsSingularUrl}/${project.fldProjectID}`;
         return this.http
             .put(url, JSON.stringify(project), {headers: this.headers})
             .toPromise()
@@ -57,5 +66,14 @@ export class ProjectService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errorMessage); // log to console instead
         return Promise.reject(errorMessage);
+    }
+
+    private observableHandleError (error: any) {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
+        let errorMessage = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(error);
+        return Observable.throw(errorMessage || 'Server error');
     }
 }
