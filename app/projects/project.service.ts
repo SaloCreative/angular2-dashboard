@@ -22,6 +22,13 @@ export class ProjectService {
             .catch(this.handleError);
     }
 
+    getProjectsByPage(page: number, perPage: number): Promise<Project[]> {
+        return this.http.get(this.projectsAllUrl + '?perPage=' + perPage + '&page=' + page)
+            .toPromise()
+            .then(response => response.json().data as Project[])
+            .catch(this.handleError);
+    }
+
     getProject(id: number): Promise<Project> {
         return this.http.get(this.projectsSingularUrl + id)
             .toPromise()

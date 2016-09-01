@@ -17,6 +17,11 @@ export class ProjectListComponent implements OnInit {
     projects:Project[];
     selectedProject:Project;
     errorMessage:string;
+    ]
+    private total: number;
+
+    page: number = 1;
+    loading: boolean;
 
     constructor(private router:Router,
                 private projectService:ProjectService) {
@@ -27,6 +32,20 @@ export class ProjectListComponent implements OnInit {
             .then(projects => this.projects = projects,
                 error =>  this.errorMessage = <any>error);
     }
+
+    getProjectsByPage(page: number) {
+        let perPage = 50;
+        this.total = 1553;
+        this.loading = true;
+        this.projectService.getProjectsByPage(page, perPage)
+            .then(projects => {
+                this.projects = projects;
+                this.page = page;
+                this.loading = false;
+            },
+            error =>  this.errorMessage = <any>error);
+    }
+
 
     add(name:string):void {
         name = name.trim();
@@ -41,7 +60,7 @@ export class ProjectListComponent implements OnInit {
     }
 
     ngOnInit():void {
-        this.getProjects();
+        this.getProjectsByPage(1);
     }
 
 }
