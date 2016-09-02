@@ -1,14 +1,9 @@
-export class Project {
+export interface Project {
     fldProjectID: number;
     fldTitle: string;
     fldClientID : number;
     fldProjectStatusID : number;
     fldDateAdded : number;
-}
-
-export class ProjectsData {
-    data;
-    total;
 }
 
 export class ProjectMeta {

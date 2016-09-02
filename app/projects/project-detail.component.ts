@@ -15,6 +15,7 @@ export class ProjectDetailComponent {
     clients: Client[] = [];
     projectStatus: ProjectStatus[] = [];
     submitted = false;
+    private response;
     errorMessage:string;
 
     constructor(
@@ -27,7 +28,7 @@ export class ProjectDetailComponent {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
             this.projectService.getProject(id)
-                .subscribe(project => this.project = project,
+                .subscribe((project: Project) => this.project = project,
                 error => this.errorMessage = <any>error);
         });
         this.getClients();
@@ -47,11 +48,19 @@ export class ProjectDetailComponent {
                     this.projectStatus = projectStatus;
                 },
                 error =>  this.errorMessage = <any>error);
+
     }
 
     onSubmit() {
         this.projectService.update(this.project)
-            .subscribe(error => this.errorMessage = <any>error);
+            .subscribe(
+                projectsUpdate => {
+                    this.submitted = true;
+                    this.response = projectsUpdate.status;
+                    console.log(this.response);
+                },
+                error => this.errorMessage = <any>error);
+
     }
 
     delete():void {
