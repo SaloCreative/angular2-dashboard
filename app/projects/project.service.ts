@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response} from '@angular/http';
+import { Headers, Http, Response, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { PaginatedResult } from '../shared/pagination';
+import { RequestResult } from '../shared/requestHandler';
 import { Project, ProjectMeta, ProjectStatus } from './project';
 import { Api } from '../app/app.endpoints';
 
@@ -55,11 +56,18 @@ export class ProjectService {
             .catch(this.observableHandleError);
     }
 
-    update(project: Project): Observable<Project> {
-        const url = `${this.projectsUrl}/${project.fldProjectID}`;
+    update(project: Project): Observable<RequestResult> {
+        var projectsUpdate: RequestResult = new RequestResult();
+        let options = new RequestOptions({ headers: this.headers });
+        let body = JSON.stringify(project);
+        let url = `${this.projectsUrl}/${project.fldProjectID}`;
         return this.http
-            .put(url, JSON.stringify(project), {headers: this.headers})
-            .map(() => project)
+            .put(url, body, options)
+            .map((res: Response) => {
+                let result = res.json();
+                projectsUpdate.status = result.status;
+                return projectsUpdate;
+            })
             .catch(this.observableHandleError);
     }
 
