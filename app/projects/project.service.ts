@@ -31,44 +31,34 @@ export class ProjectService {
             .catch(this.observableHandleError);
     }
 
-    getProject(id: number): Promise<Project> {
+    getProject(id: number): Observable<Project> {
         return this.http.get(this.projectsUrl + '/' + id)
-            .toPromise()
-            .then(response => response.json() as Project)
-            .catch(this.handleError);
+            .map(res => <Project> res.json())
+            .catch(this.observableHandleError);
+            //.toPromise()
+            //.then(response => response.json() as Project)
+            //.catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
+    delete(id: number): Observable<void> {
         return this.http.delete(this.projectsUrl + '/' + id, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
+            .map(() => null)
+            .catch(this.observableHandleError);
     }
 
-    create(name: string): Promise<Project> {
+    create(name: string): Observable<Project> {
         return this.http
             .post(this.projectsUrl + '/', JSON.stringify({name: name}), {headers: this.headers})
-            .toPromise()
-            .then(res => res.json().data)
-            .catch(this.handleError);
+            .map(res => res.json().data)
+            .catch(this.observableHandleError);
     }
 
-    update(project: Project): Promise<Project> {
+    update(project: Project): Observable<Project> {
         const url = `${this.projectsUrl}/${project.fldProjectID}`;
         return this.http
             .put(url, JSON.stringify(project), {headers: this.headers})
-            .toPromise()
-            .then(() => project)
-            .catch(this.handleError);
-    }
-
-    private handleError (error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
-        let errorMessage = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errorMessage); // log to console instead
-        return Promise.reject(errorMessage);
+            .map(() => project)
+            .catch(this.observableHandleError);
     }
 
     private observableHandleError (error: any) {

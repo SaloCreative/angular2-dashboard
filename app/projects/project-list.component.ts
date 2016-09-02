@@ -56,7 +56,7 @@ export class ProjectListComponent implements OnInit {
             return;
         }
         this.projectService.create(name)
-            .then(project => {
+            .subscribe(project => {
                 this.projects.push(project);
                 this.selectedProject = null;
             });

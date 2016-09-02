@@ -4,32 +4,32 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Client } from './client';
+import { Api } from '../app/app.endpoints';
 
 @Injectable()
 export class ClientService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private clientsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients';
-    private clientsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients/';
+    private clientsUrl = Api.getEndPoint('clients');
 
     constructor(private http: Http) { }
 
     getClients(): Promise<Client[]> {
-        return this.http.get(this.clientsAllUrl)
+        return this.http.get(this.clientsUrl)
             .toPromise()
             .then(response => response.json() as Client[])
             .catch(this.handleError);
     }
 
     getClient(id: number): Promise<Client> {
-        return this.http.get(this.clientsSingularUrl + id)
+        return this.http.get(this.clientsUrl + '/' + id)
             .toPromise()
             .then(response => response.json() as Client)
             .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-        let url = `${this.clientsSingularUrl}/${id}`;
+        let url = `${this.clientsUrl}/${id}`;
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
@@ -38,14 +38,14 @@ export class ClientService {
 
     create(name: string): Promise<Client> {
         return this.http
-            .post(this.clientsSingularUrl, JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.clientsUrl + '/', JSON.stringify({name: name}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
 
     update(client: Client): Promise<Client> {
-        const url = `${this.clientsSingularUrl}/${client.fldClientID}`;
+        const url = `${this.clientsUrl}/${client.fldClientID}`;
         return this.http
             .put(url, JSON.stringify(client), {headers: this.headers})
             .toPromise()
