@@ -9,10 +9,8 @@ import { Client } from './client';
 export class ClientService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private clientsAllUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/clients';
-    private clientsSingularUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/clients/';
-    //private clientsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients';  // URL to web api
-    //private clientsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients/';  // URL to web api
+    private clientsAllUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients';
+    private clientsSingularUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/clients/';
 
     constructor(private http: Http) { }
 

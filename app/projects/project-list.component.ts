@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { Project, ProjectMeta } from './project';
 import { ProjectService } from './project.service';
-import { OrderBy } from "../app/app.orderBy";
+import { OrderBy } from "../app/app.orderby";
 
 
 @Component({

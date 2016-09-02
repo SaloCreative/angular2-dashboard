@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderBy } from "../app/app.orderBy"
+import { OrderBy } from "../app/app.orderby"
 
 import { Client } from './client';
 import { ClientService } from './client.service';
