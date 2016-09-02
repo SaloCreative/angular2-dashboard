@@ -4,13 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Project, ProjectMeta, ProjectStatus } from './project';
+import { Api } from '../app/app.endpoints';
 
 @Injectable()
 export class ProjectService {
-
     private headers = new Headers({'Content-Type': 'application/json'});
-    //private projectsUrl = 'http://192.168.1.150/api.intranet2.freshleafmedia.co.uk/public/api/v1/projects';
-    private projectsUrl = 'http://local.api.intranet2.freshleafmedia.co.uk/api/v1/projects';
+    private projectsUrl = Api.getEndPoint('projects');
 
     constructor(private http: Http) { }
 
