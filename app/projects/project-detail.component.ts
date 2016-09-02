@@ -10,7 +10,7 @@ import { ClientService } from '../clients/client.service';
     templateUrl: 'views/projects/project-detail.component.html',
     providers: [ProjectService, ClientService]
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent {
     project: Project;
     clients: Client[] = [];
     projectStatus: ProjectStatus[] = [];
@@ -36,7 +36,7 @@ export class ProjectDetailComponent implements OnInit {
 
     getClients() {
         this.clientService.getClients()
-            .then(clients => this.clients = clients,
+            .subscribe(clients => this.clients = clients['data'],
                 error =>  this.errorMessage = <any>error);
     }
 

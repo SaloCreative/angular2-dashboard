@@ -9,9 +9,10 @@ import { ClientService } from '../clients/client.service';
     templateUrl: 'views/dashboard/dashboard.component.html',
     providers: [ClientService]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
     clients: Client[] = [];
+    errorMessage:string;
 
     constructor(
         private router: Router,
@@ -20,8 +21,8 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.clientService.getClients()
-            .then(clients => this.clients = clients);
-        console.log(this.clients);
+            .subscribe(clients => this.clients = clients['data'],
+                error => this.errorMessage = <any>error);
     }
 
     gotoDetail(client: Client): void {

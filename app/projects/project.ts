@@ -6,6 +6,11 @@ export class Project {
     fldDateAdded : number;
 }
 
+export class ProjectsData {
+    data;
+    total;
+}
+
 export class ProjectMeta {
     total : number;
 }

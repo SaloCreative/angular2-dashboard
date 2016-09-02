@@ -8,8 +8,9 @@ import { ClientService } from './client.service';
     templateUrl: 'views/clients/client-detail.component.html',
     providers: [ClientService]
 })
-export class ClientDetailComponent implements OnInit {
+export class ClientDetailComponent {
     client: Client;
+    errorMessage:string;
 
     constructor(
         private clientService: ClientService,
@@ -20,13 +21,14 @@ export class ClientDetailComponent implements OnInit {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
             this.clientService.getClient(id)
-                .then(client => this.client = client);
+                .subscribe(client => this.client = client,
+                error => this.errorMessage = <any>error);
         });
     }
 
     save(): void {
         this.clientService.update(this.client)
-            .then(this.goBack);
+            .subscribe(error => this.errorMessage = <any>error);
     }
 
     goBack(): void {

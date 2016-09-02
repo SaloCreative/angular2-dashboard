@@ -5,19 +5,14 @@
         Add
     </button>
 </div>
-<ul class="clients">
-    <li *ngFor="let client of clients | orderBy : ['fldCompanyName']" [class.selected]="client === selectedClient" (click)="onSelect(client)">
-        <span class="badge">{{client.fldClientID}}</span>
-        <span>{{client.fldCompanyName}}</span>
-        <button class="delete" (click)="delete(client); $event.stopPropagation()">x</button>
-    </li>
-</ul>
 <div *ngIf="errorMessage">
     {{errorMessage}}
 </div>
-<div *ngIf="selectedClient">
-    <h2>
-        {{selectedClient.fldCompanyName | uppercase}} is my hero
-    </h2>
-    <button (click)="gotoDetail()">View Details</button>
-</div>
+<ul class="clients">
+    <li *ngFor="let client of clients | paginate: { itemsPerPage: 50, currentPage: page, totalItems: total }">
+        <span class="badge">{{client.fldClientID}}</span>
+        <span>{{client.fldCompanyName}}</span>
+        <a routerLink="/clients/{{client.fldClientID}}">{{client.fldCompanyName}}</a>
+    </li>
+</ul>
+<pagination-controls (pageChange)="getClientsByPage($event)"></pagination-controls>

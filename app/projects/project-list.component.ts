@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
-import { Project, ProjectMeta } from './project';
+import { Project, ProjectMeta, ProjectsData } from './project';
 import { ProjectService } from './project.service';
-import { OrderBy } from "../app/app.orderby";
 
 
 @Component({
     selector: 'project-list',
     templateUrl: 'views/projects/project-list.component.html',
-    pipes: [PaginatePipe, OrderBy],
+    pipes: [PaginatePipe],
     providers: [ProjectService, PaginationService],
     directives: [PaginationControlsCmp]
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent {
     projects:Project[];
+    projectsData:ProjectsData[];
     projectsMeta:ProjectMeta[];
     selectedProject:Project;
     errorMessage:string;
@@ -32,9 +32,9 @@ export class ProjectListComponent implements OnInit {
         this.loading = true;
         this.projectService.getProjectsByPage(page, perPage)
             .subscribe(
-                projects => {
-                    this.projects = projects['data'];
-                    this.total = projects['total'];
+                projectsData => {
+                    this.projects = projectsData['data'];
+                    this.total = projectsData['total'];
                     this.page = page;
                     this.loading = false;
                 },

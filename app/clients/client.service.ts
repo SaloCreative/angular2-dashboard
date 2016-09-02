@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -14,51 +15,51 @@ export class ClientService {
 
     constructor(private http: Http) { }
 
-    getClients(): Promise<Client[]> {
+    getClientsByPage(page: number, perPage: number): Observable<Client[]> {
+        return this.http.get(this.clientsUrl + '?perPage=' + perPage + '&page=' + page)
+            .map(res => <Client[]> res.json())
+            .catch(this.observableHandleError);
+    }
+
+    getClients(): Observable<Client[]> {
         return this.http.get(this.clientsUrl)
-            .toPromise()
-            .then(response => response.json() as Client[])
-            .catch(this.handleError);
+            .map(res => <Client[]> res.json())
+            .catch(this.observableHandleError);
     }
 
-    getClient(id: number): Promise<Client> {
+    getClient(id: number): Observable<Client> {
         return this.http.get(this.clientsUrl + '/' + id)
-            .toPromise()
-            .then(response => response.json() as Client)
-            .catch(this.handleError);
+            .map(res => <Client> res.json())
+            .catch(this.observableHandleError);
     }
 
-    delete(id: number): Promise<void> {
-        let url = `${this.clientsUrl}/${id}`;
-        return this.http.delete(url, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
+    delete(id: number): Observable<void> {
+        return this.http.delete(this.clientsUrl + '/' + id, {headers: this.headers})
+            .map(() => null)
+            .catch(this.observableHandleError);
     }
 
-    create(name: string): Promise<Client> {
+    create(name: string): Observable<Client> {
         return this.http
             .post(this.clientsUrl + '/', JSON.stringify({name: name}), {headers: this.headers})
-            .toPromise()
-            .then(res => res.json().data)
-            .catch(this.handleError);
+            .map(res => res.json().data)
+            .catch(this.observableHandleError);
     }
 
-    update(client: Client): Promise<Client> {
+    update(client: Client): Observable<Client> {
         const url = `${this.clientsUrl}/${client.fldClientID}`;
         return this.http
             .put(url, JSON.stringify(client), {headers: this.headers})
-            .toPromise()
-            .then(() => client)
-            .catch(this.handleError);
+            .map(() => client)
+            .catch(this.observableHandleError);
     }
 
-    private handleError (error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
+    private observableHandleError (error: any) {
+        // in a real world app, we may send the server to some remote logging infrastructure
+        // instead of just logging it to the console
         let errorMessage = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errorMessage); // log to console instead
-        return Promise.reject(errorMessage);
+        console.error(error);
+        return Observable.throw(errorMessage || 'Server error');
     }
 }

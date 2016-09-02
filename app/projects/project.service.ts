@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/toPromise';
 
-import { Project, ProjectMeta, ProjectStatus } from './project';
+import { Project, ProjectMeta, ProjectStatus, ProjectsData } from './project';
 import { Api } from '../app/app.endpoints';
 
 @Injectable()
@@ -13,9 +12,9 @@ export class ProjectService {
 
     constructor(private http: Http) { }
 
-    getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
+    getProjectsByPage(page: number, perPage: number): Observable<ProjectsData[]> {
         return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
-            .map(res => <Project[]> res.json())
+            .map(res => <ProjectsData[]> res.json())
             .catch(this.observableHandleError);
     }
 
@@ -35,9 +34,6 @@ export class ProjectService {
         return this.http.get(this.projectsUrl + '/' + id)
             .map(res => <Project> res.json())
             .catch(this.observableHandleError);
-            //.toPromise()
-            //.then(response => response.json() as Project)
-            //.catch(this.handleError);
     }
 
     delete(id: number): Observable<void> {
