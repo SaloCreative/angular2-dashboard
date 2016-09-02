@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { PaginatedResult } from '../shared/pagination';
-import { Project, ProjectMeta, ProjectStatus, ProjectsData } from './project';
+import { Project, ProjectMeta, ProjectStatus } from './project';
 import { Api } from '../app/app.endpoints';
 
 @Injectable()

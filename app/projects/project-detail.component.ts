@@ -27,7 +27,7 @@ export class ProjectDetailComponent {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
             this.projectService.getProject(id)
-                .subscribe(project => this.project = project,
+                .subscribe((project: Project) => this.project = project,
                 error => this.errorMessage = <any>error);
         });
         this.getClients();
