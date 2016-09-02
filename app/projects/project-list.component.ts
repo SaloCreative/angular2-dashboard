@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { PaginatedResult } from '../shared/pagination';
-import { Project, ProjectMeta, ProjectsData } from './project';
+import { Project, ProjectMeta } from './project';
 import { ProjectService } from './project.service';
 
 
@@ -15,7 +15,6 @@ import { ProjectService } from './project.service';
 })
 export class ProjectListComponent {
     projects:Project[];
-    projectsData:ProjectsData[];
     projectsMeta:ProjectMeta[];
     selectedProject:Project;
     errorMessage:string;

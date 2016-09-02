@@ -24,6 +24,12 @@ export class ProjectService {
             .catch(this.observableHandleError);
     }
 
+    getProject(id: number): Observable<Project> {
+        return this.http.get(this.projectsUrl + '/' + id)
+            .map(res => <Project> res.json())
+            .catch(this.observableHandleError);
+    }
+
     getProjectsMeta(): Observable<ProjectMeta[]> {
         return this.http.get(this.projectsUrl + '/meta')
             .map(res => <ProjectMeta[]> res.json().total)
@@ -33,12 +39,6 @@ export class ProjectService {
     getProjectStatus(): Observable<ProjectStatus[]> {
         return this.http.get(this.projectsUrl + '/statuses')
             .map(res => <ProjectStatus[]> res.json())
-            .catch(this.observableHandleError);
-    }
-
-    getProject(id: number): Observable<Project> {
-        return this.http.get(this.projectsUrl + '/' + id)
-            .map(res => <Project> res.json())
             .catch(this.observableHandleError);
     }
 

@@ -6,11 +6,6 @@ export interface Project {
     fldDateAdded : number;
 }
 
-export interface ProjectsData {
-    data;
-    total;
-}
-
 export class ProjectMeta {
     total : number;
 }
