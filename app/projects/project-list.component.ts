@@ -33,8 +33,8 @@ export class ProjectListComponent implements OnInit {
         this.projectService.getProjectsByPage(page, perPage)
             .subscribe(
                 projects => {
-                    this.projects = projects;
-                    this.total = 1616;
+                    this.projects = projects['data'];
+                    this.total = projects['total'];
                     this.page = page;
                     this.loading = false;
                 },

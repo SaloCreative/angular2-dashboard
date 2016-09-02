@@ -15,7 +15,7 @@ export class ProjectService {
 
     getProjectsByPage(page: number, perPage: number): Observable<Project[]> {
         return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
-            .map(res => <Project[]> res.json().data)
+            .map(res => <Project[]> res.json())
             .catch(this.observableHandleError);
     }
 
