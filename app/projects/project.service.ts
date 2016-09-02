@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-
+import { PaginatedResult } from '../shared/pagination';
 import { Project, ProjectMeta, ProjectStatus, ProjectsData } from './project';
 import { Api } from '../app/app.endpoints';
 
@@ -12,9 +12,15 @@ export class ProjectService {
 
     constructor(private http: Http) { }
 
-    getProjectsByPage(page: number, perPage: number): Observable<ProjectsData[]> {
+    getProjectsByPage(page: number, perPage: number): Observable<PaginatedResult<Project[]>> {
+        var projectsResult: PaginatedResult<Project[]> = new PaginatedResult<Project[]>();
         return this.http.get(this.projectsUrl + '?perPage=' + perPage + '&page=' + page)
-            .map(res => <ProjectsData[]> res.json())
+            .map((res: Response) => {
+                let result = res.json();
+                projectsResult.result = result.data;
+                projectsResult.total = result.total;
+                return projectsResult;
+            })
             .catch(this.observableHandleError);
     }
 
