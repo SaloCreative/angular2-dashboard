@@ -75,8 +75,8 @@ export class ProjectService {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         let errorMessage = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error - Your request could not be processed';
         console.error(error);
-        return Observable.throw(errorMessage || 'Server error');
+        return Observable.throw(errorMessage || 'Server error - Your request could not be processed');
     }
 }
