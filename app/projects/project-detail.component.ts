@@ -10,11 +10,12 @@ import { ClientService } from '../clients/client.service';
     templateUrl: 'views/projects/project-detail.component.html',
     providers: [ProjectService, ClientService]
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent {
     project: Project;
     clients: Client[] = [];
     projectStatus: ProjectStatus[] = [];
     submitted = false;
+    private response;
     errorMessage:string;
 
     constructor(
@@ -27,33 +28,17 @@ export class ProjectDetailComponent implements OnInit {
         this.route.params.forEach((params: Params) => {
             let id = +params['id'];
             this.projectService.getProject(id)
-                .then(project => this.project = project);
+                .subscribe((project: Project) => this.project = project,
+                error => this.errorMessage = <any>error);
         });
-        this.clientService.getClients()
-            .then(clients => this.clients = clients);
+        this.getClients();
         this.getProjectStatus();
     }
 
-    save(): void {
-        this.projectService.update(this.project)
-            .then(this.goBack);
-    }
-
-    goBack(): void {
-        window.history.back();
-    }
-
-    onSubmit() {
-        this.projectService.update(this.project);
-        this.submitted = true;
-        setTimeout(function() {
-            this.submitted = false;
-        }.bind(this), 3000);
-    }
-
-    delete():void {
-        this.projectService.delete(this.project.fldProjectID)
-            .then(this.goBack);
+    getClients() {
+        this.clientService.getClients()
+            .subscribe(clients => this.clients = clients['data'],
+                error =>  this.errorMessage = <any>error);
     }
 
     getProjectStatus() {
@@ -63,5 +48,28 @@ export class ProjectDetailComponent implements OnInit {
                     this.projectStatus = projectStatus;
                 },
                 error =>  this.errorMessage = <any>error);
+
     }
+
+    onSubmit() {
+        this.projectService.update(this.project)
+            .subscribe(
+                projectsUpdate => {
+                    this.submitted = true;
+                    this.response = projectsUpdate.status;
+                    console.log(this.response);
+                },
+                error => this.errorMessage = <any>error);
+
+    }
+
+    delete():void {
+        this.projectService.delete(this.project.fldProjectID)
+            .subscribe(this.goBack);
+    }
+
+    goBack(): void {
+        window.history.back();
+    }
+
 }

@@ -1,4 +1,4 @@
-export class Project {
+export interface Project {
     fldProjectID: number;
     fldTitle: string;
     fldClientID : number;
