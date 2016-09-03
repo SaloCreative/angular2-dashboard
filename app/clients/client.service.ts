@@ -12,6 +12,7 @@ export class ClientService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
     private clientsUrl = Api.getEndPoint('clients');
+    private clientUrl = Api.getEndPoint('client');
 
     constructor(private http: Http) { }
 
@@ -23,12 +24,12 @@ export class ClientService {
 
     getClients(): Observable<Client[]> {
         return this.http.get(this.clientsUrl)
-            .map(res => <Client[]> res.json())
+            .map(res => <Client[]> res.json().data)
             .catch(this.observableHandleError);
     }
 
     getClient(id: number): Observable<Client> {
-        return this.http.get(this.clientsUrl + '/' + id)
+        return this.http.get(this.clientUrl + id)
             .map(res => <Client> res.json())
             .catch(this.observableHandleError);
     }

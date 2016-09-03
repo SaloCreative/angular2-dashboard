@@ -10,6 +10,8 @@ import { Api } from '../app/app.endpoints';
 export class ProjectService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private projectsUrl = Api.getEndPoint('projects');
+    private projectUrl = Api.getEndPoint('project');
+    private projectsMetaUrl = Api.getEndPoint('projectMeta');
 
     constructor(private http: Http) { }
 
@@ -26,32 +28,33 @@ export class ProjectService {
     }
 
     getProject(id: number): Observable<Project> {
-        return this.http.get(this.projectsUrl + '/' + id)
+        return this.http.get(this.projectUrl + id)
             .map(res => <Project> res.json())
             .catch(this.observableHandleError);
     }
 
-    getProjectsMeta(): Observable<ProjectMeta[]> {
-        return this.http.get(this.projectsUrl + '/meta')
-            .map(res => <ProjectMeta[]> res.json().total)
-            .catch(this.observableHandleError);
-    }
-
-    getProjectStatus(): Observable<ProjectStatus[]> {
-        return this.http.get(this.projectsUrl + '/statuses')
-            .map(res => <ProjectStatus[]> res.json())
+    getProjectsMeta(): Observable<ProjectMeta<ProjectStatus[]>> {
+        var projectsMeta: ProjectMeta<ProjectStatus[]> = new ProjectMeta<ProjectStatus[]>();
+        return this.http.get(this.projectsMetaUrl)
+            .map((res: Response) => {
+                let result = res.json();
+                projectsMeta.statuses = result.statuses;
+                projectsMeta.totals = result.totals;
+                projectsMeta.total = result.total;
+                return projectsMeta;
+            })
             .catch(this.observableHandleError);
     }
 
     delete(id: number): Observable<void> {
-        return this.http.delete(this.projectsUrl + '/' + id, {headers: this.headers})
+        return this.http.delete(this.projectUrl + id, {headers: this.headers})
             .map(() => null)
             .catch(this.observableHandleError);
     }
 
     create(name: string): Observable<Project> {
         return this.http
-            .post(this.projectsUrl + '/', JSON.stringify({name: name}), {headers: this.headers})
+            .post(this.projectUrl, JSON.stringify({name: name}), {headers: this.headers})
             .map(res => res.json().data)
             .catch(this.observableHandleError);
     }
@@ -60,7 +63,7 @@ export class ProjectService {
         var projectsUpdate: RequestResult = new RequestResult();
         let options = new RequestOptions({ headers: this.headers });
         let body = JSON.stringify(project);
-        let url = `${this.projectsUrl}/${project.fldProjectID}`;
+        let url = `${this.projectUrl}${project.fldProjectID}`;
         return this.http
             .put(url, body, options)
             .map((res: Response) => {

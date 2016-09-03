@@ -15,7 +15,6 @@ import { ProjectService } from './project.service';
 })
 export class ProjectListComponent {
     projects:Project[];
-    projectsMeta:ProjectMeta[];
     selectedProject:Project;
     errorMessage:string;
     private total: number;
@@ -40,14 +39,14 @@ export class ProjectListComponent {
                 error =>  this.errorMessage = <any>error);
     }
 
-    getProjectsMeta() {
+    /*getProjectsMeta() {
         this.projectService.getProjectsMeta()
             .subscribe(
                 projectsMeta => {
                     this.projectsMeta = projectsMeta;
                 },
                 error =>  this.errorMessage = <any>error);
-    }
+    }*/
 
     add(name:string):void {
         name = name.trim();

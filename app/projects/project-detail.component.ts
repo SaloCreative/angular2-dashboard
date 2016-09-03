@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router'
-import { Project, ProjectStatus } from './project';
+import { Project, ProjectStatus, ProjectMeta} from './project';
 import { ProjectService } from './project.service';
 import { Client } from '../clients/client';
 import { ClientService } from '../clients/client.service';
@@ -37,15 +37,15 @@ export class ProjectDetailComponent {
 
     getClients() {
         this.clientService.getClients()
-            .subscribe(clients => this.clients = clients['data'],
+            .subscribe(clients => {this.clients = clients;},
                 error =>  this.errorMessage = <any>error);
     }
 
     getProjectStatus() {
-        this.projectService.getProjectStatus()
-            .subscribe(
-                projectStatus => {
-                    this.projectStatus = projectStatus;
+        this.projectService.getProjectsMeta()
+            .subscribe((projectsMeta: ProjectMeta<ProjectStatus[]>) => {
+                    this.projectStatus = projectsMeta.statuses;
+                    console.log(this.projectStatus);
                 },
                 error =>  this.errorMessage = <any>error);
 

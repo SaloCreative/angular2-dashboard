@@ -6,11 +6,7 @@ export interface Project {
     fldDateAdded : number;
 }
 
-export class ProjectMeta {
-    total : number;
-}
-
-export class ProjectStatus {
+export interface ProjectStatus {
     fldProjectStatusID : number;
     fldName : string;
     fldLocked: number;
@@ -20,4 +16,10 @@ export class ProjectStatus {
     fldDateModified: number;
     fldAddedBy: number;
     fldModifiedBy: number;
+}
+
+export class ProjectMeta<T> {
+    statuses :  T;
+    totals;
+    total : number;
 }
