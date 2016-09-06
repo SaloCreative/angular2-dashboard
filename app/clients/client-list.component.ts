@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { Client } from './client';
 import { ClientService } from './client.service';
 
@@ -8,9 +7,7 @@ import { ClientService } from './client.service';
 @Component({
     selector: 'client-list',
     templateUrl: 'views/clients/client-list.component.html',
-    pipes: [PaginatePipe],
-    providers: [ClientService, PaginationService],
-    directives: [PaginationControlsCmp]
+    providers: [ClientService],
 })
 export class ClientListComponent {
     clients: Client[];

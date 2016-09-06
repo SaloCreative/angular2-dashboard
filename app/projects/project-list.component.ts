@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 import { PaginatedResult } from '../shared/pagination';
 import { Project, ProjectMeta } from './project';
 import { ProjectService } from './project.service';
@@ -9,9 +8,7 @@ import { ProjectService } from './project.service';
 @Component({
     selector: 'project-list',
     templateUrl: 'views/projects/project-list.component.html',
-    pipes: [PaginatePipe],
-    providers: [ProjectService, PaginationService],
-    directives: [PaginationControlsCmp]
+    providers: [ProjectService]
 })
 export class ProjectListComponent {
     projects:Project[];
@@ -62,7 +59,7 @@ export class ProjectListComponent {
 
     ngOnInit():void {
         this.getProjectsByPage(1);
-        this.getProjectsMeta();
+        //this.getProjectsMeta();
     }
 
 }

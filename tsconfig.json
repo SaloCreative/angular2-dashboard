@@ -8,6 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "suppressExcessPropertyErrors": true,
     "outDir": "dist"
   }
 }

@@ -9,10 +9,9 @@
     {{errorMessage}}
 </div>
 <ul class="clients">
-    <li *ngFor="let client of clients | paginate: { itemsPerPage: 50, currentPage: page, totalItems: total }">
+    <li *ngFor="let client of clients">
         <span class="badge">{{client.fldClientID}}</span>
         <span>{{client.fldCompanyName}}</span>
         <a routerLink="/clients/{{client.fldClientID}}">{{client.fldCompanyName}}</a>
     </li>
 </ul>
-<pagination-controls (pageChange)="getClientsByPage($event)"></pagination-controls>
